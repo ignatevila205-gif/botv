@@ -218,7 +218,7 @@ def show_result(chat_id, user_id):
     markup.add(
         InlineKeyboardButton(
             "✉️ Записаться на консультацию",
-            url="https://t.me/martynova_ludmila"
+            url="https://t.me/tribute/app?startapp=ep_8xqwcSUqHewEY1fbRNJrXnqFqnFXgjMUEu8BQDd6TWQoTi2rQ4"
         )
     )
 
