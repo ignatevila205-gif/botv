@@ -101,28 +101,30 @@ questions = [
 results = {
     "А": {
         "text": "У вас мышление долга и напряжения.\nДеньги связаны с «надо», а не с «можно».\nДоход растет, когда уходит внутренний контроль.",
-        "photo_url": "https://ibb.co/99sMVGj9"
+        "photo_url": "https://example.com/photo_a.jpg"
     },
     "Б": {
         "text": "Есть ресурс и потенциал,\nно доход нестабилен — деньги приходят волнами.\nНужно закрепить состояние «я выдерживаю больше».",
-        "photo_url": "https://ibb.co/67KKyThv"
+        "photo_url": "https://example.com/photo_b.jpg"
     },
     "В": {
         "text": "Вы близки к зрелому денежному мышлению,\nно есть бессознательные блоки на «легко» и «много».",
-        "photo_url": "https://ibb.co/YFJtc2y3"
+        "photo_url": "https://example.com/photo_v.jpg"
     },
     "Г": {
         "text": "Деньги для вас — зона тревоги и неопределенности.\nВы чувствуете, что причина не снаружи, а внутри — и это ключ.",
-        "photo_url": "https://ibb.co/0pYGFyrg"
+        "photo_url": "https://example.com/photo_g.jpg"
     }
 }
 
 user_states = defaultdict(lambda: {'current_question': 0, 'answers': defaultdict(int)})
 
+CONSULT_URL = "https://t.me/tribute/app?startapp=ep_8xqwcSUqHewEY1fbRNJrXnqFqnFXgjMUEu8BQDd6TWQoTi2rQ4"
+
 def get_keyboard(q_num, options):
     markup = InlineKeyboardMarkup(row_width=2)
     buttons = []
-    for i, opt in enumerate(options):
+    for i, _ in enumerate(options):
         letter = chr(1040 + i)
         callback = f"ans_{q_num}_{letter}"
         buttons.append(InlineKeyboardButton(letter, callback_data=callback))
@@ -192,39 +194,47 @@ def show_result(chat_id, user_id):
     full_text = f"""🔍 *Расшифровка (очень честно)*
 
 {result_text}
-
-🔥 Ты чувствуешь, что можешь больше, но что-то внутри будто не отпускает? Это не случайно.
-
-Это твоя внутренняя система держит старый сценарий.
-
-На сессии я помогу его разорвать — мягко, но необратимо.
-
-Если внутри щёлкнуло хоть на секунду — пиши. Это знак, что пора.
 """
 
-    markup = InlineKeyboardMarkup()
-    markup.add(
-        InlineKeyboardButton(
-            "✉️ Записаться на консультацию",
-            url="https://t.me/tribute/app?startapp=ep_8xqwcSUqHewEY1fbRNJrXnqFqnFXgjMUEu8BQDd6TWQoTi2rQ4"
-        )
-    )
-
-    if photo_url:
-        bot.send_photo(
-            chat_id,
-            photo_url,
-            caption=full_text,
-            reply_markup=markup,
-            parse_mode='Markdown'
-        )
-    else:
+    try:
+        if photo_url:
+            bot.send_photo(
+                chat_id,
+                photo=photo_url,
+                caption=full_text,
+                reply_markup=result_markup,
+                parse_mode='Markdown'
+            )
+        else:
+            bot.send_message(
+                chat_id,
+                full_text,
+                reply_markup=result_markup,
+                parse_mode='Markdown'
+            )
+    except Exception:
         bot.send_message(
             chat_id,
             full_text,
-            reply_markup=markup,
+            reply_markup=result_markup,
             parse_mode='Markdown'
         )
+
+
+
+    bot.send_message(
+        chat_id,
+        "Ты можешь записаться на бесплатную 15 минутную консультацию 👇",
+        reply_markup=consult_markup
+        
+            result_markup = InlineKeyboardMarkup()
+    result_markup.add(
+        InlineKeyboardButton(
+            "✉️ Записаться на консультацию",
+            url="https://t.me/@martynova_ludmila"
+        )
+    )
+    )
 
     del user_states[user_id]
 
