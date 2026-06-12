@@ -119,7 +119,7 @@ results = {
 
 user_states = defaultdict(lambda: {'current_question': 0, 'answers': defaultdict(int)})
 
-CONSULT_URL = "https://t.me/tribute/app?startapp=ep_8xqwcSUqHewEY1fbRNJrXnqFqnFXgjMUEu8BQDd6TWQoTi2rQ4"
+CONSULT_URL = "https://t.me/martynova_ludmila"
 
 def get_keyboard(q_num, options):
     markup = InlineKeyboardMarkup(row_width=2)
@@ -196,6 +196,14 @@ def show_result(chat_id, user_id):
 {result_text}
 """
 
+    result_markup = InlineKeyboardMarkup()
+    result_markup.add(
+        InlineKeyboardButton(
+            "✉️ Записаться на консультацию",
+            url=CONSULT_URL
+        )
+    )
+
     try:
         if photo_url:
             bot.send_photo(
@@ -220,20 +228,18 @@ def show_result(chat_id, user_id):
             parse_mode='Markdown'
         )
 
-
+    consult_markup = InlineKeyboardMarkup()
+    consult_markup.add(
+        InlineKeyboardButton(
+            "Перейти",
+            url=CONSULT_URL
+        )
+    )
 
     bot.send_message(
         chat_id,
         "Ты можешь записаться на бесплатную 15 минутную консультацию 👇",
         reply_markup=consult_markup
-        
-            result_markup = InlineKeyboardMarkup()
-    result_markup.add(
-        InlineKeyboardButton(
-            "✉️ Записаться на консультацию",
-            url="https://t.me/@martynova_ludmila"
-        )
-    )
     )
 
     del user_states[user_id]
