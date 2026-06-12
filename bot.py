@@ -2,7 +2,7 @@ import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from collections import defaultdict
 
-TOKEN = 'YOUR_BOT_TOKEN'
+TOKEN = '8375852663:AAFFCpAPGqsyFmYeud7G2Cps9SYWHmvRWms'
 bot = telebot.TeleBot(TOKEN)
 
 questions = [
@@ -195,14 +195,6 @@ def show_result(chat_id, user_id):
 
 {result_text}
 """
-
-    result_markup = InlineKeyboardMarkup()
-    result_markup.add(
-        InlineKeyboardButton(
-            "✉️ Записаться на консультацию",
-            url=CONSULT_URL
-        )
-    )
 
     try:
         if photo_url:
