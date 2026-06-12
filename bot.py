@@ -2,7 +2,7 @@ import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from collections import defaultdict
 
-TOKEN = '8375852663:AAFFCpAPGqsyFmYeud7G2Cps9SYWHmvRWms'
+TOKEN = 'YOUR_BOT_TOKEN'
 bot = telebot.TeleBot(TOKEN)
 
 questions = [
@@ -202,30 +202,24 @@ def show_result(chat_id, user_id):
                 chat_id,
                 photo=photo_url,
                 caption=full_text,
-                reply_markup=result_markup,
                 parse_mode='Markdown'
             )
         else:
             bot.send_message(
                 chat_id,
                 full_text,
-                reply_markup=result_markup,
                 parse_mode='Markdown'
             )
     except Exception:
         bot.send_message(
             chat_id,
             full_text,
-            reply_markup=result_markup,
             parse_mode='Markdown'
         )
 
     consult_markup = InlineKeyboardMarkup()
     consult_markup.add(
-        InlineKeyboardButton(
-            "Перейти",
-            url=CONSULT_URL
-        )
+        InlineKeyboardButton("Записаться на консультацию", url=CONSULT_URL)
     )
 
     bot.send_message(
